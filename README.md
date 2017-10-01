@@ -5,12 +5,11 @@ September 30, 2017
 
 
 
-<img align="right" src="pic/graph_convnet.jpg" style="width: 200px;"/>
+<img src="pic/graph_convnet.jpg" align="right" width="200" height="200"/>
 
 
 ### Xavier Bresson
-![Alt text](pic/home100.jpg?raw=true) http://www.ntu.edu.sg/home/xbresson <br> 
-<img src="pic/home100.jpg" width="5" height="5"/> http://www.ntu.edu.sg/home/xbresson<br>
+<img src="pic/home100.jpg" width="15" height="15"/> http://www.ntu.edu.sg/home/xbresson<br>
 <img src="pic/github100.jpg" style="width: 15px;"/> https://github.com/xbresson<br>
 <img src="pic/twitter100.jpg" style="width: 15px;"/> https://twitter.com/xbresson <br>
 <br>
