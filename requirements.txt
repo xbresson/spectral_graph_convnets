@@ -1,0 +1,9 @@
+pip==9.0.1
+ipython==6.1.0
+jupyter==1.0.0
+numpy==1.13.1
+http://download.pytorch.org/whl/torch-0.2.0.post1-cp36-cp36m-macosx_10_7_x86_64.whl
+torchvision==0.1.9
+https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-0.11.0rc0-py3-none-any.whl
+scipy==0.19.1
+scikit-learn==0.19.0
