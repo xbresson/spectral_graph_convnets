@@ -9,8 +9,8 @@ September 30, 2017
 
 
 ### Xavier Bresson
-![Alt text](pic/home100.jpg) http://www.ntu.edu.sg/home/xbresson <br> 
-<img src="pic/home100.jpg" style="width: 5px;"/> http://www.ntu.edu.sg/home/xbresson<br>
+![Alt text](pic/home100.jpg?raw=true) http://www.ntu.edu.sg/home/xbresson <br> 
+<img src="pic/home100.jpg" width="5" height="5"/> http://www.ntu.edu.sg/home/xbresson<br>
 <img src="pic/github100.jpg" style="width: 15px;"/> https://github.com/xbresson<br>
 <img src="pic/twitter100.jpg" style="width: 15px;"/> https://twitter.com/xbresson <br>
 <br>
