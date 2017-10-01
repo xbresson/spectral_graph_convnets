@@ -7,7 +7,7 @@ import sys
 major, minor = sys.version_info.major, sys.version_info.minor
 
 if ( (major is not 3) or (minor is not 6) ):
-    raise Exception('please use Python 3.6 (for PyTorch), you have Python {}.{}'.format(major,minor))
+    raise Exception('Code developed for PyTorch with Python 3.6. You have Python {}.{}'.format(major,minor))
 
 try:
     import numpy 

@@ -9,7 +9,7 @@ September 30, 2017
 
 
 ### Xavier Bresson
-![](pic/home100.jpg =15x15) http://www.ntu.edu.sg/home/xbresson <br> 
+![Alt text](pic/home100.jpg) http://www.ntu.edu.sg/home/xbresson <br> 
 <img src="pic/home100.jpg" style="width: 5px;"/> http://www.ntu.edu.sg/home/xbresson<br>
 <img src="pic/github100.jpg" style="width: 15px;"/> https://github.com/xbresson<br>
 <img src="pic/twitter100.jpg" style="width: 15px;"/> https://twitter.com/xbresson <br>
@@ -33,8 +33,8 @@ The signals on graph are the MNIST images vectorized as $28^2 \times 1$ vectors.
 
 ### Installation
    ```sh
-   git clone https://github.com/xbresson/graph_cnn_pytorch
-   cd graph_cnn_pytorch
+   git clone https://github.com/xbresson/graph_convnets_pytorch.git
+   cd graph_convnets_pytorch
    pip install -r requirements.txt # installation for python 3.6.2
    python check_install.py
    jupyter notebook # run the 2 notebooks
