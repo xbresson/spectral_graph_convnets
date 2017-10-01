@@ -5,7 +5,7 @@ September 30, 2017
 
 
 
-<img src="pic/graph_convnet.jpg" align="right" width="250" />
+<img src="pic/graph_convnet.jpg" align="right" width="200"/>
 
 
 ### Xavier Bresson
