@@ -11775,7 +11775,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Graph-Convolutional-Neural-Networks">Graph Convolutional Neural Networks<a class="anchor-link" href="#Graph-Convolutional-Neural-Networks">&#182;</a></h1><h2 id="Graph-LeNet5-with-PyTorch">Graph LeNet5 with PyTorch<a class="anchor-link" href="#Graph-LeNet5-with-PyTorch">&#182;</a></h2><h3 id="Xavier-Bresson,-Sept.-2017">Xavier Bresson, Sept. 2017<a class="anchor-link" href="#Xavier-Bresson,-Sept.-2017">&#182;</a></h3>
+<h1 id="Graph-Convolutional-Neural-Networks">Graph Convolutional Neural Networks<a class="anchor-link" href="#Graph-Convolutional-Neural-Networks">&#182;</a></h1><h2 id="Graph-LeNet5-with-PyTorch">Graph LeNet5 with PyTorch<a class="anchor-link" href="#Graph-LeNet5-with-PyTorch">&#182;</a></h2><h3 id="Xavier-Bresson,-Oct.-2017">Xavier Bresson, Oct. 2017<a class="anchor-link" href="#Xavier-Bresson,-Oct.-2017">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -11987,7 +11987,7 @@ lmax: [1.3857549, 1.3441432, 1.219873, 0.99999928]
 (55000, 928)
 (5000, 928)
 (10000, 928)
-Execution time: 1.00s
+Execution time: 1.06s
 </pre>
 </div>
 </div>
@@ -12006,7 +12006,7 @@ Execution time: 1.00s
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># class definitions</span>
@@ -12027,7 +12027,7 @@ Execution time: 1.00s
         <span class="n">W</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved_tensors</span> 
         <span class="n">grad_input</span> <span class="o">=</span> <span class="n">grad_output</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
         <span class="n">grad_input_dL_dW</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mm</span><span class="p">(</span><span class="n">grad_input</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">t</span><span class="p">())</span> 
-        <span class="n">grad_input_dL_dx</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mm</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">grad_input</span> <span class="p">)</span>
+        <span class="n">grad_input_dL_dx</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mm</span><span class="p">(</span><span class="n">W</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="n">grad_input</span> <span class="p">)</span>
         <span class="k">return</span> <span class="n">grad_input_dL_dW</span><span class="p">,</span> <span class="n">grad_input_dL_dx</span>
     
     
@@ -12035,7 +12035,7 @@ Execution time: 1.00s
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">net_parameters</span><span class="p">):</span>
         
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Graph ConvNet: LeNet5</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Graph ConvNet: LeNet5&#39;</span><span class="p">)</span>
         
         <span class="nb">super</span><span class="p">(</span><span class="n">Graph_ConvNet_LeNet5</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         
@@ -12044,23 +12044,21 @@ Execution time: 1.00s
         <span class="n">FC1Fin</span> <span class="o">=</span> <span class="n">CL2_F</span><span class="o">*</span><span class="p">(</span><span class="n">D</span><span class="o">//</span><span class="mi">16</span><span class="p">)</span>
         
         <span class="c1"># graph CL1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">WCL1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">CL1_K</span><span class="p">,</span> <span class="n">CL1_F</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">init_weights</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">WCL1</span><span class="p">,</span> <span class="n">CL1_K</span><span class="p">,</span> <span class="n">CL1_F</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bCL1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">CL1_F</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bCL1</span><span class="o">.</span><span class="n">fill_</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">WCL1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">WCL1</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span> <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bCL1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">bCL1</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span> <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cl1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">CL1_K</span><span class="p">,</span> <span class="n">CL1_F</span><span class="p">)</span> 
+        <span class="n">Fin</span> <span class="o">=</span> <span class="n">CL1_K</span><span class="p">;</span> <span class="n">Fout</span> <span class="o">=</span> <span class="n">CL1_F</span><span class="p">;</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="mf">2.0</span><span class="o">/</span> <span class="p">(</span><span class="n">Fin</span><span class="o">+</span><span class="n">Fout</span><span class="p">)</span> <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cl1</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uniform_</span><span class="p">(</span><span class="o">-</span><span class="n">scale</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cl1</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">fill_</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">CL1_K</span> <span class="o">=</span> <span class="n">CL1_K</span><span class="p">;</span> <span class="bp">self</span><span class="o">.</span><span class="n">CL1_F</span> <span class="o">=</span> <span class="n">CL1_F</span><span class="p">;</span> 
         
         <span class="c1"># graph CL2</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">WCL2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">CL2_K</span><span class="o">*</span><span class="n">CL1_F</span><span class="p">,</span> <span class="n">CL2_F</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">init_weights</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">WCL2</span><span class="p">,</span> <span class="n">CL2_K</span><span class="o">*</span><span class="n">CL1_F</span><span class="p">,</span> <span class="n">CL2_F</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bCL2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">CL2_F</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bCL2</span><span class="o">.</span><span class="n">fill_</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>        
-        <span class="bp">self</span><span class="o">.</span><span class="n">WCL2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">WCL2</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span> <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bCL2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">bCL2</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span> <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cl2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">CL2_K</span><span class="o">*</span><span class="n">CL1_F</span><span class="p">,</span> <span class="n">CL2_F</span><span class="p">)</span> 
+        <span class="n">Fin</span> <span class="o">=</span> <span class="n">CL2_K</span><span class="o">*</span><span class="n">CL1_F</span><span class="p">;</span> <span class="n">Fout</span> <span class="o">=</span> <span class="n">CL2_F</span><span class="p">;</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="mf">2.0</span><span class="o">/</span> <span class="p">(</span><span class="n">Fin</span><span class="o">+</span><span class="n">Fout</span><span class="p">)</span> <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cl2</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uniform_</span><span class="p">(</span><span class="o">-</span><span class="n">scale</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cl2</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">fill_</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">CL2_K</span> <span class="o">=</span> <span class="n">CL2_K</span><span class="p">;</span> <span class="bp">self</span><span class="o">.</span><span class="n">CL2_F</span> <span class="o">=</span> <span class="n">CL2_F</span><span class="p">;</span> 
-        
+
         <span class="c1"># FC1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">FC1Fin</span><span class="p">,</span> <span class="n">FC1_F</span><span class="p">)</span> 
         <span class="n">Fin</span> <span class="o">=</span> <span class="n">FC1Fin</span><span class="p">;</span> <span class="n">Fout</span> <span class="o">=</span> <span class="n">FC1_F</span><span class="p">;</span>
@@ -12076,6 +12074,13 @@ Execution time: 1.00s
         <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uniform_</span><span class="p">(</span><span class="o">-</span><span class="n">scale</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">fill_</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
 
+        <span class="c1"># nb of parameters</span>
+        <span class="n">nb_param</span> <span class="o">=</span> <span class="n">CL1_K</span><span class="o">*</span> <span class="n">CL1_F</span> <span class="o">+</span> <span class="n">CL1_F</span>          <span class="c1"># CL1</span>
+        <span class="n">nb_param</span> <span class="o">+=</span> <span class="n">CL2_K</span><span class="o">*</span> <span class="n">CL1_F</span><span class="o">*</span> <span class="n">CL2_F</span> <span class="o">+</span> <span class="n">CL2_F</span>  <span class="c1"># CL2</span>
+        <span class="n">nb_param</span> <span class="o">+=</span> <span class="n">FC1Fin</span><span class="o">*</span> <span class="n">FC1_F</span> <span class="o">+</span> <span class="n">FC1_F</span>        <span class="c1"># FC1</span>
+        <span class="n">nb_param</span> <span class="o">+=</span> <span class="n">FC1_F</span><span class="o">*</span> <span class="n">FC2_F</span> <span class="o">+</span> <span class="n">FC2_F</span>         <span class="c1"># FC2</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;nb of parameters=&#39;</span><span class="p">,</span><span class="n">nb_param</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        
         
     <span class="k">def</span> <span class="nf">init_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">Fin</span><span class="p">,</span> <span class="n">Fout</span><span class="p">):</span>
 
@@ -12085,7 +12090,7 @@ Execution time: 1.00s
         <span class="k">return</span> <span class="n">W</span>
         
         
-    <span class="k">def</span> <span class="nf">graph_conv_cheby</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">lmax</span><span class="p">,</span> <span class="n">Fout</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">graph_conv_cheby</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">cl</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">lmax</span><span class="p">,</span> <span class="n">Fout</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
 
         <span class="c1"># parameters</span>
         <span class="c1"># B = batch size</span>
@@ -12135,7 +12140,7 @@ Execution time: 1.00s
         <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">([</span><span class="n">B</span><span class="o">*</span><span class="n">V</span><span class="p">,</span> <span class="n">Fin</span><span class="o">*</span><span class="n">K</span><span class="p">])</span>             <span class="c1"># B*V x Fin*K</span>
         
         <span class="c1"># Compose linearly Fin features to get Fout features</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">W</span><span class="p">)</span>                    <span class="c1"># B*V x Fout  </span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">cl</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>                            <span class="c1"># B*V x Fout  </span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">([</span><span class="n">B</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">Fout</span><span class="p">])</span>             <span class="c1"># B x V x Fout</span>
         
         <span class="k">return</span> <span class="n">x</span>
@@ -12156,12 +12161,12 @@ Execution time: 1.00s
         
         <span class="c1"># graph CL1</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># B x V x Fin=1  </span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph_conv_cheby</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">WCL1</span><span class="p">,</span> <span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lmax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">CL1_F</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CL1_K</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">bCL1</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph_conv_cheby</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cl1</span><span class="p">,</span> <span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lmax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">CL1_F</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CL1_K</span><span class="p">)</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph_max_pool</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
         
         <span class="c1"># graph CL2</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph_conv_cheby</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">WCL2</span><span class="p">,</span> <span class="n">L</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">lmax</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">CL2_F</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CL2_K</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">bCL2</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph_conv_cheby</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cl2</span><span class="p">,</span> <span class="n">L</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">lmax</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">CL2_F</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CL2_K</span><span class="p">)</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph_max_pool</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
         
@@ -12220,7 +12225,7 @@ Execution time: 1.00s
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Delete existing network if exists</span>
@@ -12371,155 +12376,158 @@ Execution time: 1.00s
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>No existing network to delete
+<pre>Delete existing network
 
 Graph ConvNet: LeNet5
+nb of parameters= 1958282 
 
 Graph_ConvNet_LeNet5 (
+  (cl1): Linear (25 -&gt; 32)
+  (cl2): Linear (800 -&gt; 64)
   (fc1): Linear (3712 -&gt; 512)
   (fc2): Linear (512 -&gt; 10)
 )
 num_epochs= 20 , train_size= 55000 , nb_iter= 11000
-epoch= 1, i=  100, loss(batch)= 0.2869, accuray(batch)= 94.00
-epoch= 1, i=  200, loss(batch)= 0.2276, accuray(batch)= 96.00
-epoch= 1, i=  300, loss(batch)= 0.2748, accuray(batch)= 96.00
-epoch= 1, i=  400, loss(batch)= 0.2201, accuray(batch)= 97.00
-epoch= 1, i=  500, loss(batch)= 0.2862, accuray(batch)= 94.00
-epoch= 1, loss(train)= 0.387, accuracy(train)= 90.960, time= 102.726, lr= 0.05000
-  accuracy(test) = 97.780 %, time= 9.260
-epoch= 2, i=  100, loss(batch)= 0.2140, accuray(batch)= 96.00
-epoch= 2, i=  200, loss(batch)= 0.1345, accuray(batch)= 100.00
-epoch= 2, i=  300, loss(batch)= 0.1576, accuray(batch)= 98.00
-epoch= 2, i=  400, loss(batch)= 0.1403, accuray(batch)= 99.00
-epoch= 2, i=  500, loss(batch)= 0.1218, accuray(batch)= 99.00
-epoch= 2, loss(train)= 0.182, accuracy(train)= 97.653, time= 100.885, lr= 0.04750
-  accuracy(test) = 98.490 %, time= 9.228
-epoch= 3, i=  100, loss(batch)= 0.1129, accuray(batch)= 100.00
-epoch= 3, i=  200, loss(batch)= 0.1205, accuray(batch)= 100.00
-epoch= 3, i=  300, loss(batch)= 0.2037, accuray(batch)= 95.00
-epoch= 3, i=  400, loss(batch)= 0.1207, accuray(batch)= 99.00
-epoch= 3, i=  500, loss(batch)= 0.1066, accuray(batch)= 100.00
-epoch= 3, loss(train)= 0.154, accuracy(train)= 98.198, time= 100.833, lr= 0.04512
-  accuracy(test) = 98.590 %, time= 9.264
-epoch= 4, i=  100, loss(batch)= 0.1086, accuray(batch)= 100.00
-epoch= 4, i=  200, loss(batch)= 0.1448, accuray(batch)= 97.00
-epoch= 4, i=  300, loss(batch)= 0.1179, accuray(batch)= 100.00
-epoch= 4, i=  400, loss(batch)= 0.1835, accuray(batch)= 97.00
-epoch= 4, i=  500, loss(batch)= 0.1481, accuray(batch)= 99.00
-epoch= 4, loss(train)= 0.135, accuracy(train)= 98.591, time= 101.565, lr= 0.04287
-  accuracy(test) = 98.630 %, time= 9.245
-epoch= 5, i=  100, loss(batch)= 0.0988, accuray(batch)= 99.00
-epoch= 5, i=  200, loss(batch)= 0.1454, accuray(batch)= 96.00
-epoch= 5, i=  300, loss(batch)= 0.1060, accuray(batch)= 99.00
-epoch= 5, i=  400, loss(batch)= 0.1234, accuray(batch)= 97.00
-epoch= 5, i=  500, loss(batch)= 0.0904, accuray(batch)= 100.00
-epoch= 5, loss(train)= 0.120, accuracy(train)= 98.849, time= 100.180, lr= 0.04073
-  accuracy(test) = 98.990 %, time= 9.256
-epoch= 6, i=  100, loss(batch)= 0.1068, accuray(batch)= 100.00
-epoch= 6, i=  200, loss(batch)= 0.0852, accuray(batch)= 100.00
-epoch= 6, i=  300, loss(batch)= 0.0844, accuray(batch)= 100.00
-epoch= 6, i=  400, loss(batch)= 0.0917, accuray(batch)= 99.00
-epoch= 6, i=  500, loss(batch)= 0.1058, accuray(batch)= 99.00
-epoch= 6, loss(train)= 0.109, accuracy(train)= 98.960, time= 101.886, lr= 0.03869
-  accuracy(test) = 99.000 %, time= 9.259
-epoch= 7, i=  100, loss(batch)= 0.1046, accuray(batch)= 99.00
-epoch= 7, i=  200, loss(batch)= 0.0779, accuray(batch)= 100.00
-epoch= 7, i=  300, loss(batch)= 0.0737, accuray(batch)= 100.00
-epoch= 7, i=  400, loss(batch)= 0.1592, accuray(batch)= 97.00
-epoch= 7, i=  500, loss(batch)= 0.1134, accuray(batch)= 98.00
-epoch= 7, loss(train)= 0.101, accuracy(train)= 99.078, time= 101.012, lr= 0.03675
-  accuracy(test) = 99.040 %, time= 9.248
-epoch= 8, i=  100, loss(batch)= 0.0821, accuray(batch)= 100.00
-epoch= 8, i=  200, loss(batch)= 0.0931, accuray(batch)= 99.00
-epoch= 8, i=  300, loss(batch)= 0.0912, accuray(batch)= 99.00
-epoch= 8, i=  400, loss(batch)= 0.0759, accuray(batch)= 100.00
-epoch= 8, i=  500, loss(batch)= 0.0892, accuray(batch)= 99.00
-epoch= 8, loss(train)= 0.093, accuracy(train)= 99.185, time= 101.205, lr= 0.03492
-  accuracy(test) = 99.010 %, time= 9.260
-epoch= 9, i=  100, loss(batch)= 0.0870, accuray(batch)= 99.00
-epoch= 9, i=  200, loss(batch)= 0.0729, accuray(batch)= 100.00
-epoch= 9, i=  300, loss(batch)= 0.0821, accuray(batch)= 99.00
-epoch= 9, i=  400, loss(batch)= 0.0721, accuray(batch)= 100.00
-epoch= 9, i=  500, loss(batch)= 0.0730, accuray(batch)= 99.00
-epoch= 9, loss(train)= 0.087, accuracy(train)= 99.298, time= 102.537, lr= 0.03317
-  accuracy(test) = 99.110 %, time= 9.281
-epoch= 10, i=  100, loss(batch)= 0.0722, accuray(batch)= 100.00
-epoch= 10, i=  200, loss(batch)= 0.0793, accuray(batch)= 99.00
-epoch= 10, i=  300, loss(batch)= 0.0635, accuray(batch)= 100.00
-epoch= 10, i=  400, loss(batch)= 0.1200, accuray(batch)= 98.00
-epoch= 10, i=  500, loss(batch)= 0.0714, accuray(batch)= 100.00
-epoch= 10, loss(train)= 0.083, accuracy(train)= 99.276, time= 102.450, lr= 0.03151
-  accuracy(test) = 99.090 %, time= 9.274
-epoch= 11, i=  100, loss(batch)= 0.0620, accuray(batch)= 100.00
-epoch= 11, i=  200, loss(batch)= 0.0600, accuray(batch)= 100.00
-epoch= 11, i=  300, loss(batch)= 0.0796, accuray(batch)= 100.00
-epoch= 11, i=  400, loss(batch)= 0.0788, accuray(batch)= 99.00
-epoch= 11, i=  500, loss(batch)= 0.0876, accuray(batch)= 99.00
-epoch= 11, loss(train)= 0.079, accuracy(train)= 99.385, time= 100.652, lr= 0.02994
-  accuracy(test) = 99.140 %, time= 9.247
-epoch= 12, i=  100, loss(batch)= 0.0602, accuray(batch)= 100.00
-epoch= 12, i=  200, loss(batch)= 0.0687, accuray(batch)= 100.00
-epoch= 12, i=  300, loss(batch)= 0.0589, accuray(batch)= 100.00
-epoch= 12, i=  400, loss(batch)= 0.0578, accuray(batch)= 100.00
-epoch= 12, i=  500, loss(batch)= 0.0592, accuray(batch)= 100.00
-epoch= 12, loss(train)= 0.074, accuracy(train)= 99.449, time= 100.738, lr= 0.02844
-  accuracy(test) = 99.060 %, time= 9.246
-epoch= 13, i=  100, loss(batch)= 0.1145, accuray(batch)= 97.00
-epoch= 13, i=  200, loss(batch)= 0.0653, accuray(batch)= 100.00
-epoch= 13, i=  300, loss(batch)= 0.0628, accuray(batch)= 100.00
-epoch= 13, i=  400, loss(batch)= 0.1312, accuray(batch)= 98.00
-epoch= 13, i=  500, loss(batch)= 0.0722, accuray(batch)= 99.00
-epoch= 13, loss(train)= 0.071, accuracy(train)= 99.467, time= 96.878, lr= 0.02702
-  accuracy(test) = 99.080 %, time= 9.245
-epoch= 14, i=  100, loss(batch)= 0.0666, accuray(batch)= 100.00
-epoch= 14, i=  200, loss(batch)= 0.0780, accuray(batch)= 99.00
-epoch= 14, i=  300, loss(batch)= 0.0594, accuray(batch)= 100.00
-epoch= 14, i=  400, loss(batch)= 0.0878, accuray(batch)= 98.00
-epoch= 14, i=  500, loss(batch)= 0.0659, accuray(batch)= 100.00
-epoch= 14, loss(train)= 0.068, accuracy(train)= 99.558, time= 99.554, lr= 0.02567
-  accuracy(test) = 99.050 %, time= 9.250
-epoch= 15, i=  100, loss(batch)= 0.0631, accuray(batch)= 100.00
-epoch= 15, i=  200, loss(batch)= 0.0660, accuray(batch)= 99.00
-epoch= 15, i=  300, loss(batch)= 0.0532, accuray(batch)= 100.00
-epoch= 15, i=  400, loss(batch)= 0.0710, accuray(batch)= 99.00
-epoch= 15, i=  500, loss(batch)= 0.0522, accuray(batch)= 100.00
-epoch= 15, loss(train)= 0.066, accuracy(train)= 99.573, time= 95.459, lr= 0.02438
-  accuracy(test) = 99.130 %, time= 9.229
-epoch= 16, i=  100, loss(batch)= 0.0852, accuray(batch)= 99.00
-epoch= 16, i=  200, loss(batch)= 0.0523, accuray(batch)= 100.00
-epoch= 16, i=  300, loss(batch)= 0.0538, accuray(batch)= 100.00
-epoch= 16, i=  400, loss(batch)= 0.0574, accuray(batch)= 100.00
-epoch= 16, i=  500, loss(batch)= 0.1135, accuray(batch)= 96.00
-epoch= 16, loss(train)= 0.063, accuracy(train)= 99.598, time= 95.649, lr= 0.02316
-  accuracy(test) = 99.150 %, time= 9.217
-epoch= 17, i=  100, loss(batch)= 0.0771, accuray(batch)= 98.00
-epoch= 17, i=  200, loss(batch)= 0.0542, accuray(batch)= 100.00
-epoch= 17, i=  300, loss(batch)= 0.0569, accuray(batch)= 100.00
-epoch= 17, i=  400, loss(batch)= 0.0516, accuray(batch)= 100.00
-epoch= 17, i=  500, loss(batch)= 0.0788, accuray(batch)= 98.00
-epoch= 17, loss(train)= 0.062, accuracy(train)= 99.607, time= 101.548, lr= 0.02201
-  accuracy(test) = 99.070 %, time= 9.248
-epoch= 18, i=  100, loss(batch)= 0.0535, accuray(batch)= 100.00
-epoch= 18, i=  200, loss(batch)= 0.0670, accuray(batch)= 99.00
-epoch= 18, i=  300, loss(batch)= 0.0499, accuray(batch)= 100.00
-epoch= 18, i=  400, loss(batch)= 0.0748, accuray(batch)= 99.00
-epoch= 18, i=  500, loss(batch)= 0.0539, accuray(batch)= 100.00
-epoch= 18, loss(train)= 0.060, accuracy(train)= 99.642, time= 95.192, lr= 0.02091
-  accuracy(test) = 99.200 %, time= 9.289
-epoch= 19, i=  100, loss(batch)= 0.0697, accuray(batch)= 99.00
-epoch= 19, i=  200, loss(batch)= 0.0502, accuray(batch)= 100.00
-epoch= 19, i=  300, loss(batch)= 0.0700, accuray(batch)= 99.00
-epoch= 19, i=  400, loss(batch)= 0.0688, accuray(batch)= 99.00
-epoch= 19, i=  500, loss(batch)= 0.0529, accuray(batch)= 100.00
-epoch= 19, loss(train)= 0.058, accuracy(train)= 99.675, time= 100.177, lr= 0.01986
-  accuracy(test) = 99.190 %, time= 9.277
-epoch= 20, i=  100, loss(batch)= 0.0466, accuray(batch)= 100.00
-epoch= 20, i=  200, loss(batch)= 0.0462, accuray(batch)= 100.00
-epoch= 20, i=  300, loss(batch)= 0.0596, accuray(batch)= 100.00
-epoch= 20, i=  400, loss(batch)= 0.0479, accuray(batch)= 100.00
-epoch= 20, i=  500, loss(batch)= 0.0483, accuray(batch)= 100.00
-epoch= 20, loss(train)= 0.056, accuracy(train)= 99.727, time= 94.225, lr= 0.01887
-  accuracy(test) = 99.210 %, time= 9.204
+epoch= 1, i=  100, loss(batch)= 0.4129, accuray(batch)= 91.00
+epoch= 1, i=  200, loss(batch)= 0.3374, accuray(batch)= 92.00
+epoch= 1, i=  300, loss(batch)= 0.1941, accuray(batch)= 97.00
+epoch= 1, i=  400, loss(batch)= 0.2339, accuray(batch)= 96.00
+epoch= 1, i=  500, loss(batch)= 0.1828, accuray(batch)= 97.00
+epoch= 1, loss(train)= 0.396, accuracy(train)= 90.804, time= 100.878, lr= 0.05000
+  accuracy(test) = 97.730 %, time= 9.023
+epoch= 2, i=  100, loss(batch)= 0.1696, accuray(batch)= 98.00
+epoch= 2, i=  200, loss(batch)= 0.2761, accuray(batch)= 94.00
+epoch= 2, i=  300, loss(batch)= 0.1676, accuray(batch)= 98.00
+epoch= 2, i=  400, loss(batch)= 0.1188, accuray(batch)= 100.00
+epoch= 2, i=  500, loss(batch)= 0.2046, accuray(batch)= 95.00
+epoch= 2, loss(train)= 0.187, accuracy(train)= 97.549, time= 100.835, lr= 0.04750
+  accuracy(test) = 98.270 %, time= 8.987
+epoch= 3, i=  100, loss(batch)= 0.1839, accuray(batch)= 96.00
+epoch= 3, i=  200, loss(batch)= 0.1674, accuray(batch)= 98.00
+epoch= 3, i=  300, loss(batch)= 0.1397, accuray(batch)= 98.00
+epoch= 3, i=  400, loss(batch)= 0.1966, accuray(batch)= 98.00
+epoch= 3, i=  500, loss(batch)= 0.1546, accuray(batch)= 98.00
+epoch= 3, loss(train)= 0.155, accuracy(train)= 98.253, time= 101.344, lr= 0.04512
+  accuracy(test) = 98.650 %, time= 9.043
+epoch= 4, i=  100, loss(batch)= 0.2077, accuray(batch)= 97.00
+epoch= 4, i=  200, loss(batch)= 0.1644, accuray(batch)= 98.00
+epoch= 4, i=  300, loss(batch)= 0.1275, accuray(batch)= 99.00
+epoch= 4, i=  400, loss(batch)= 0.1430, accuray(batch)= 98.00
+epoch= 4, i=  500, loss(batch)= 0.1855, accuray(batch)= 99.00
+epoch= 4, loss(train)= 0.138, accuracy(train)= 98.542, time= 101.353, lr= 0.04287
+  accuracy(test) = 98.650 %, time= 9.012
+epoch= 5, i=  100, loss(batch)= 0.1073, accuray(batch)= 99.00
+epoch= 5, i=  200, loss(batch)= 0.1340, accuray(batch)= 98.00
+epoch= 5, i=  300, loss(batch)= 0.1362, accuray(batch)= 99.00
+epoch= 5, i=  400, loss(batch)= 0.1478, accuray(batch)= 98.00
+epoch= 5, i=  500, loss(batch)= 0.1501, accuray(batch)= 98.00
+epoch= 5, loss(train)= 0.122, accuracy(train)= 98.795, time= 101.034, lr= 0.04073
+  accuracy(test) = 98.740 %, time= 9.012
+epoch= 6, i=  100, loss(batch)= 0.1457, accuray(batch)= 98.00
+epoch= 6, i=  200, loss(batch)= 0.1073, accuray(batch)= 98.00
+epoch= 6, i=  300, loss(batch)= 0.1079, accuray(batch)= 99.00
+epoch= 6, i=  400, loss(batch)= 0.0891, accuray(batch)= 99.00
+epoch= 6, i=  500, loss(batch)= 0.0995, accuray(batch)= 99.00
+epoch= 6, loss(train)= 0.111, accuracy(train)= 98.978, time= 101.218, lr= 0.03869
+  accuracy(test) = 98.690 %, time= 9.030
+epoch= 7, i=  100, loss(batch)= 0.1062, accuray(batch)= 99.00
+epoch= 7, i=  200, loss(batch)= 0.0986, accuray(batch)= 99.00
+epoch= 7, i=  300, loss(batch)= 0.1089, accuray(batch)= 99.00
+epoch= 7, i=  400, loss(batch)= 0.0914, accuray(batch)= 99.00
+epoch= 7, i=  500, loss(batch)= 0.1146, accuray(batch)= 98.00
+epoch= 7, loss(train)= 0.102, accuracy(train)= 99.120, time= 101.632, lr= 0.03675
+  accuracy(test) = 98.990 %, time= 9.076
+epoch= 8, i=  100, loss(batch)= 0.0832, accuray(batch)= 100.00
+epoch= 8, i=  200, loss(batch)= 0.0797, accuray(batch)= 100.00
+epoch= 8, i=  300, loss(batch)= 0.0762, accuray(batch)= 100.00
+epoch= 8, i=  400, loss(batch)= 0.2062, accuray(batch)= 97.00
+epoch= 8, i=  500, loss(batch)= 0.0970, accuray(batch)= 99.00
+epoch= 8, loss(train)= 0.095, accuracy(train)= 99.164, time= 101.151, lr= 0.03492
+  accuracy(test) = 98.990 %, time= 9.021
+epoch= 9, i=  100, loss(batch)= 0.1012, accuray(batch)= 99.00
+epoch= 9, i=  200, loss(batch)= 0.0793, accuray(batch)= 100.00
+epoch= 9, i=  300, loss(batch)= 0.0771, accuray(batch)= 100.00
+epoch= 9, i=  400, loss(batch)= 0.0786, accuray(batch)= 100.00
+epoch= 9, i=  500, loss(batch)= 0.0899, accuray(batch)= 99.00
+epoch= 9, loss(train)= 0.089, accuracy(train)= 99.264, time= 101.987, lr= 0.03317
+  accuracy(test) = 99.180 %, time= 9.014
+epoch= 10, i=  100, loss(batch)= 0.0718, accuray(batch)= 99.00
+epoch= 10, i=  200, loss(batch)= 0.0646, accuray(batch)= 100.00
+epoch= 10, i=  300, loss(batch)= 0.1157, accuray(batch)= 99.00
+epoch= 10, i=  400, loss(batch)= 0.0718, accuray(batch)= 100.00
+epoch= 10, i=  500, loss(batch)= 0.1252, accuray(batch)= 98.00
+epoch= 10, loss(train)= 0.082, accuracy(train)= 99.367, time= 101.591, lr= 0.03151
+  accuracy(test) = 99.110 %, time= 9.033
+epoch= 11, i=  100, loss(batch)= 0.0681, accuray(batch)= 100.00
+epoch= 11, i=  200, loss(batch)= 0.0846, accuray(batch)= 99.00
+epoch= 11, i=  300, loss(batch)= 0.0703, accuray(batch)= 99.00
+epoch= 11, i=  400, loss(batch)= 0.0682, accuray(batch)= 100.00
+epoch= 11, i=  500, loss(batch)= 0.0870, accuray(batch)= 100.00
+epoch= 11, loss(train)= 0.079, accuracy(train)= 99.378, time= 101.530, lr= 0.02994
+  accuracy(test) = 99.060 %, time= 9.017
+epoch= 12, i=  100, loss(batch)= 0.0997, accuray(batch)= 98.00
+epoch= 12, i=  200, loss(batch)= 0.1114, accuray(batch)= 98.00
+epoch= 12, i=  300, loss(batch)= 0.0691, accuray(batch)= 99.00
+epoch= 12, i=  400, loss(batch)= 0.0671, accuray(batch)= 100.00
+epoch= 12, i=  500, loss(batch)= 0.0946, accuray(batch)= 98.00
+epoch= 12, loss(train)= 0.075, accuracy(train)= 99.458, time= 101.616, lr= 0.02844
+  accuracy(test) = 99.120 %, time= 9.091
+epoch= 13, i=  100, loss(batch)= 0.0869, accuray(batch)= 98.00
+epoch= 13, i=  200, loss(batch)= 0.0619, accuray(batch)= 100.00
+epoch= 13, i=  300, loss(batch)= 0.0930, accuray(batch)= 99.00
+epoch= 13, i=  400, loss(batch)= 0.0799, accuray(batch)= 99.00
+epoch= 13, i=  500, loss(batch)= 0.0586, accuray(batch)= 100.00
+epoch= 13, loss(train)= 0.072, accuracy(train)= 99.458, time= 101.749, lr= 0.02702
+  accuracy(test) = 99.100 %, time= 9.008
+epoch= 14, i=  100, loss(batch)= 0.0618, accuray(batch)= 100.00
+epoch= 14, i=  200, loss(batch)= 0.0577, accuray(batch)= 100.00
+epoch= 14, i=  300, loss(batch)= 0.0583, accuray(batch)= 100.00
+epoch= 14, i=  400, loss(batch)= 0.0607, accuray(batch)= 100.00
+epoch= 14, i=  500, loss(batch)= 0.0760, accuray(batch)= 99.00
+epoch= 14, loss(train)= 0.069, accuracy(train)= 99.516, time= 101.536, lr= 0.02567
+  accuracy(test) = 99.180 %, time= 9.018
+epoch= 15, i=  100, loss(batch)= 0.0555, accuray(batch)= 100.00
+epoch= 15, i=  200, loss(batch)= 0.0765, accuray(batch)= 99.00
+epoch= 15, i=  300, loss(batch)= 0.0752, accuray(batch)= 99.00
+epoch= 15, i=  400, loss(batch)= 0.0618, accuray(batch)= 100.00
+epoch= 15, i=  500, loss(batch)= 0.0734, accuray(batch)= 100.00
+epoch= 15, loss(train)= 0.066, accuracy(train)= 99.591, time= 101.262, lr= 0.02438
+  accuracy(test) = 99.280 %, time= 9.052
+epoch= 16, i=  100, loss(batch)= 0.0780, accuray(batch)= 99.00
+epoch= 16, i=  200, loss(batch)= 0.0516, accuray(batch)= 100.00
+epoch= 16, i=  300, loss(batch)= 0.0634, accuray(batch)= 100.00
+epoch= 16, i=  400, loss(batch)= 0.0531, accuray(batch)= 100.00
+epoch= 16, i=  500, loss(batch)= 0.0635, accuray(batch)= 99.00
+epoch= 16, loss(train)= 0.064, accuracy(train)= 99.600, time= 100.793, lr= 0.02316
+  accuracy(test) = 99.220 %, time= 9.053
+epoch= 17, i=  100, loss(batch)= 0.0884, accuray(batch)= 99.00
+epoch= 17, i=  200, loss(batch)= 0.0694, accuray(batch)= 99.00
+epoch= 17, i=  300, loss(batch)= 0.0541, accuray(batch)= 100.00
+epoch= 17, i=  400, loss(batch)= 0.0574, accuray(batch)= 100.00
+epoch= 17, i=  500, loss(batch)= 0.0516, accuray(batch)= 100.00
+epoch= 17, loss(train)= 0.062, accuracy(train)= 99.596, time= 100.811, lr= 0.02201
+  accuracy(test) = 99.200 %, time= 9.063
+epoch= 18, i=  100, loss(batch)= 0.0531, accuray(batch)= 100.00
+epoch= 18, i=  200, loss(batch)= 0.0755, accuray(batch)= 98.00
+epoch= 18, i=  300, loss(batch)= 0.0521, accuray(batch)= 100.00
+epoch= 18, i=  400, loss(batch)= 0.0612, accuray(batch)= 100.00
+epoch= 18, i=  500, loss(batch)= 0.0561, accuray(batch)= 100.00
+epoch= 18, loss(train)= 0.061, accuracy(train)= 99.615, time= 100.540, lr= 0.02091
+  accuracy(test) = 99.180 %, time= 9.043
+epoch= 19, i=  100, loss(batch)= 0.0559, accuray(batch)= 100.00
+epoch= 19, i=  200, loss(batch)= 0.0570, accuray(batch)= 99.00
+epoch= 19, i=  300, loss(batch)= 0.0497, accuray(batch)= 100.00
+epoch= 19, i=  400, loss(batch)= 0.0596, accuray(batch)= 99.00
+epoch= 19, i=  500, loss(batch)= 0.0499, accuray(batch)= 100.00
+epoch= 19, loss(train)= 0.059, accuracy(train)= 99.629, time= 100.761, lr= 0.01986
+  accuracy(test) = 99.210 %, time= 9.012
+epoch= 20, i=  100, loss(batch)= 0.0495, accuray(batch)= 100.00
+epoch= 20, i=  200, loss(batch)= 0.0549, accuray(batch)= 100.00
+epoch= 20, i=  300, loss(batch)= 0.0477, accuray(batch)= 100.00
+epoch= 20, i=  400, loss(batch)= 0.0674, accuray(batch)= 100.00
+epoch= 20, i=  500, loss(batch)= 0.0522, accuray(batch)= 100.00
+epoch= 20, loss(train)= 0.058, accuracy(train)= 99.664, time= 100.785, lr= 0.01887
+  accuracy(test) = 99.190 %, time= 9.055
 </pre>
 </div>
 </div>

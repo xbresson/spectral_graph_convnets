@@ -46,7 +46,7 @@ The signals on graph are the MNIST images vectorized as $28^2 \times 1$ vectors.
 ### Results
 GPU Quadro M4000<br>
 * Standard ConvNets: **01_standard_convnet_lenet5_mnist_pytorch.ipynb**, accuracy= 99.31, speed= 6.9 sec/epoch. <br>
-* Graph ConvNets: **02_graph_convnet_lenet5_mnist_pytorch.ipynb**, accuracy= 99.21, speed= 100.8 sec/epoch <br>
+* Graph ConvNets: **02_graph_convnet_lenet5_mnist_pytorch.ipynb**, accuracy= 99.19, speed= 100.8 sec/epoch <br>
 <br>
 
 
@@ -71,7 +71,7 @@ class my_sparse_mm(torch.autograd.Function):
         W, x = self.saved_tensors 
         grad_input = grad_output.clone()
         grad_input_dL_dW = torch.mm(grad_input, x.t()) 
-        grad_input_dL_dx = torch.mm(W, grad_input )
+        grad_input_dL_dx = torch.mm(W.t(), grad_input )
         return grad_input_dL_dW, grad_input_dL_dx
 ```
 <br>
